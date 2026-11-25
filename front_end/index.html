@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>තේ පොහොර බෙදාහැරීමේ පද්ධතිය</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 16px;
+      background: #f4f7f5;
+      color: #1f2933;
+    }
+    h1 {
+      color: #1b5e20;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #2e7d32;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #d9e2ec;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #e8f5e9;
+    }
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    input, select, button {
+      padding: 8px 12px;
+      border-radius: 5px;
+      border: 1px solid #cbd2d9;
+      font-size: 14px;
+    }
+    button {
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1b5e20;
+    }
+    .msg {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #1b5e20;
+    }
+    .err {
+      color: #c62828;
+    }
+  </style>
+</head>
+<body>
+  <h1>තේ පොහොර බෙදාහැරීමේ පද්ධතිය</h1>
+
+  <div class="card">
+    <h2>පවතින පොහොර තොග</h2>
+    <button onclick="loadFertilizers()">Refresh Stock</button>
+    <div id="stockMessage" class="msg"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>පොහොර වර්ගය</th>
+          <th>ප්‍රමාණය (kg)</th>
+          <th>තොගය යාවත්කාලීන කරන්න (+/- kg)</th>
+        </tr>
+      </thead>
+      <tbody id="fertilizersBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>නව පොහොර ඉල්ලීමක් යවන්න</h2>
+    <form id="requestForm">
+      <input type="number" id="farmerId" placeholder="Farmer ID" required min="1" />
+      <input type="number" id="fertilizerId" placeholder="Fertilizer ID" required min="1" />
+      <input type="number" step="0.01" id="qtyKg" placeholder="ප්‍රමාණය (kg)" required min="0.01" />
+      <button type="submit">ඉල්ලීම යවන්න</button>
+    </form>
+    <div id="formMessage" class="msg"></div>
+  </div>
+
+  <div class="card">
+    <h2>සියලුම පොහොර ඉල්ලීම්</h2>
+    <button onclick="loadRequests()">Refresh Requests</button>
+    <div id="reqMessage" class="msg"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Request ID</th>
+          <th>Farmer ID</th>
+          <th>Fertilizer ID</th>
+          <th>ප්‍රමාණය (kg)</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="requestsBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const API_URL = "http://127.0.0.1:8000";
+
+    function showMsg(elId, text, isError = false) {
+      const el = document.getElementById(elId);
+      el.className = isError ? "msg err" : "msg";
+      el.textContent = text;
+    }
+
+    async function loadFertilizers() {
+      const tbody = document.getElementById("fertilizersBody");
+      try {
+        const res = await fetch(`${API_URL}/fertilizers`);
+        const data = await res.json();
+        const items = Array.isArray(data) ? data : (data.fertilizers || []);
+
+        tbody.innerHTML = items.map(f => {
+          const id = f.fertilizer_id ?? f.id;
+          const name = f.name ?? f.fertilizer_name ?? "-";
+          const qty = f.stock_qty_kg ?? f.available_qty_kg ?? f.quantity_kg ?? f.quantity ?? "-";
+          return `
+            <tr>
+              <td>${id}</td>
+              <td>${name}</td>
+              <td>${qty}</td>
+              <td>
+                <input type="number" step="0.01" id="stockChange_${id}" placeholder="+/- kg" style="width:90px;" />
+                <button onclick="updateStock(${id})">Update</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" class="err">දත්ත ලබා ගැනීමට නොහැක: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function updateStock(fertilizerId) {
+      const input = document.getElementById(`stockChange_${fertilizerId}`);
+      const changeVal = parseFloat(input.value);
+      if (isNaN(changeVal)) return;
+
+      try {
+        const res = await fetch(`${API_URL}/fertilizers/${fertilizerId}/stock`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity_change_kg: changeVal })
+        });
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.detail || "Stock update failed");
+
+        showMsg("stockMessage", result.message || "තොගය යාවත්කාලීන විය!", false);
+        input.value = "";
+        loadFertilizers();
+      } catch (err) {
+        showMsg("stockMessage", `දෝෂයක්: ${err.message}`, true);
+      }
+    }
+
+    document.getElementById("requestForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      showMsg("formMessage", "");
+
+      const payload = {
+        farmer_id: parseInt(document.getElementById("farmerId").value, 10),
+        fertilizer_id: parseInt(document.getElementById("fertilizerId").value, 10),
+        requested_qty_kg: parseFloat(document.getElementById("qtyKg").value)
+      };
+
+      try {
+        const res = await fetch(`${API_URL}/requests`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.detail || "Request failed");
+
+        showMsg("formMessage", result.message || "ඉල්ලීම සාර්ථකව යවන ලදී!", false);
+        e.target.reset();
+        loadRequests();
+      } catch (err) {
+        showMsg("formMessage", `දෝෂයක්: ${err.message}`, true);
+      }
+    });
+
+    async function loadRequests() {
+      const tbody = document.getElementById("requestsBody");
+      try {
+        const res = await fetch(`${API_URL}/requests`);
+        const data = await res.json();
+        const items = Array.isArray(data) ? data : (data.requests || []);
+
+        tbody.innerHTML = items.map(r => {
+          const reqId = r.request_id ?? r.id;
+          const farmerId = r.farmer_id ?? "-";
+          const fertId = r.fertilizer_id ?? "-";
+          const qty = r.requested_qty_kg ?? r.quantity_kg ?? "-";
+          const status = (r.status ?? "pending").toLowerCase();
+
+          return `
+            <tr>
+              <td>${reqId}</td>
+              <td>${farmerId}</td>
+              <td>${fertId}</td>
+              <td>${qty}</td>
+              <td>${status}</td>
+              <td>
+                <select id="statusSel_${reqId}">
+                  <option value="pending" ${status === "pending" ? "selected" : ""}>Pending</option>
+                  <option value="approved" ${status === "approved" ? "selected" : ""}>Approved</option>
+                  <option value="rejected" ${status === "rejected" ? "selected" : ""}>Rejected</option>
+                  <option value="distributed" ${status === "distributed" ? "selected" : ""}>Distributed</option>
+                </select>
+                <button onclick="changeStatus(${reqId})">Save</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="err">ඉල්ලීම් ලබා ගැනීමට නොහැක: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function changeStatus(requestId) {
+      const sel = document.getElementById(`statusSel_${requestId}`);
+      try {
+        const res = await fetch(`${API_URL}/requests/${requestId}/status`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: sel.value })
+        });
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.detail || "Status update failed");
+
+        showMsg("reqMessage", result.message || "Status යාවත්කාලීන විය!", false);
+        loadRequests();
+        loadFertilizers();
+      } catch (err) {
+        showMsg("reqMessage", `දෝෂයක්: ${err.message}`, true);
+      }
+    }
+
+    loadFertilizers();
+    loadRequests();
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #067a2f;
+    color: #333;
+}
+
+/* Header Section Styles */
+.main-header {
+    display: flex;
+    align-items: center;
+    background-color: #0d5225;
+    padding: 15px 20px;
+    border-bottom: 2px solid #000;
+}
+
+.logo-box {
+    background-color: #ffffff;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 170px;
+}
+
+.header-logo {
+    width: 150px;
+    height: auto;
+}
+
+.title-box {
+    flex: 1;
+    padding-left: 25px;
+}
+
+.title-box h1 {
+    color: #4cd936;
+    font-size: 40px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.title-box p {
+    color: #4cd936;
+    font-size: 26px;
+    margin-top: 15px;
+}
+
+.user-photo-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.photo-circle {
+    width: 160px;
+    height: 160px;
+    background-color: #dcdcdc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+    padding: 10px;
+}
+
+/* Layout Body Styles */
+.main-body {
+    display: flex;
+    min-height: calc(100vh - 200px);
+    background-color: #0d5225;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 220px;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+
+.nav-btn {
+    background-color: #4cd936;
+    color: #ffffff;
+    border: none;
+    padding: 15px 10px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.nav-btn:hover {
+    background-color: #3cb828;
+}
+
+/* Content Area Styles */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Info Card Styles */
+.info-card {
+    flex: 3;
+    background-color: #dcdcdc;
+    padding: 25px;
+}
+
+.info-card h2 {
+    font-size: 22px;
+    color: #000000;
+    font-weight: normal;
+    margin-bottom: 25px;
+}
+
+.info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+}
+
+.info-group {
+    display: flex;
+    align-items: center;
+    width: 47%;
+    gap: 10px;
+}
+
+.info-group label {
+    font-size: 18px;
+    color: #000;
+    white-space: nowrap;
+}
+
+.input-box {
+    height: 35px;
+    background-color: #384e0c;
+    flex: 1;
+}
+
+.full-row {
+    width: 100%;
+}
+
+.address-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 45%;
+}
+
+.large-input-box {
+    height: 100px;
+    background-color: #384e0c;
+    width: 100%;
+}
+
+.plantations-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+    margin-left: auto;
+    align-self: flex-start;
+    margin-top: 50px;
+}
+
+.wide-input {
+    max-width: 250px;
+}
+
+/* Request Card Styles */
+.request-card {
+    flex: 1;
+    background-color: #dcdcdc;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.request-card h3 {
+    font-size: 22px;
+    color: #000;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.request-btn {
+    background-color: #0c421d;
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.request-btn:hover {
+    background-color: #072912;
+}

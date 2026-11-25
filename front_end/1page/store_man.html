@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>තේ පොහොර බෙදා හැරීමේ පද්දතිය</title>
+    <style>
+         body{
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMYjpC_tIT07XS8NGOmBDUpMcGIIc_t8j18mBL6h63kg&s=10');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+        }
+        .bottom-right-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 100px; 
+            height: auto;
+            z-index: 1000; 
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <table width="90%" cellpadding="25" cellspacing="0" bgcolor="green">
+            <tr>
+                <td align="center" bgcolor="green">
+                    <font color="white" size="7"><b>FERTILIZER STORE MANAGER REGISTRATION</b></font>
+                    <p>
+                        <font color="white" size="3">
+                            <b>
+                                Make Sure Enter the Correct Information!
+                            </b>
+                        </font>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table width="60%" cellpadding="25" cellspacing="0" bgcolor="rgba(255, 255, 255, 0.85)" style="border-radius: 10px;">
+            <tr align="center" bgcolor="white">
+                <td align="left" bgcolor="white">
+                    <form>
+                        <h3><hr color="green">    
+                    <font color="green" size="4">
+                        <b>
+                            PERSONAL INFORMATION
+                        </b>
+                    </font>
+                </h3><hr color="green">
+                <br><br>
+                    <label for="fullname"><font size="2" color="black">Enter Name With Surename : </font></label>
+                    <input type="text" id="fullname" name="fullname">
+                    <br><br>
+                    <label for="nic"><font size="2" color="black">Enter Your NIC : </font></label>
+                    <input type="text" id="nic" name="nic">
+                    <br><br>
+                    <label for="moblie"><font size="2" color="black">Enter Your Phonenumber : </font></label>
+                    <input type="tel" id="mobile" name="mobile">
+                    <br><br>
+                    <label for="email"><font size="2" color="black">Enter your Email Address : </font></label>
+                    <input type="email" id="email" name="email">
+                    <br><br>
+                    <h3><hr color="green">    
+                    <font color="green" size="4">
+                        <b>
+                            OFFICIAL SERVICE DETAILS
+                        </b>
+                    </font>
+                </h3><hr color="green">
+                <br><br>
+                <label for="nic"><font size="2" color="black">Public Service Number : </font></label>
+                <input type="text" id="nic" name="nic">
+                <br><br>
+                <label for="designation"><font size="2" color="black">Designation : </font></label>
+                <input type="text" id="Designation" name="Designation">
+                <br><br>
+                <label for="department"><font size="2" color="black">Attached Ministry/Department : </font></label>
+                <input type="text" id="department" name="department">
+                <br><br>
+                <label for="place"><font size="2" color="black">Agrarian Services Center : </font></label>
+                <input type="text" id="place" name="servicecenter">
+                <br><br>
+                <label for="place"><font size="2" color="black">Distric and Divisional secretial area : </font></label>
+                <input type="text" id="place" name="servicecenter">
+                <br><br>
+                <div class="dropdown-group">
+                    <label for="district"><font size="2" color="black">Select District : </font></label>
+                    <select id="district" name="district" onchange="changeDivisions()">
+                        <option value="">-- Select District --</option>
+                        <option value="galle">Galle (ගාල්ල)</option>
+                        <option value="matara">Matara (මාතර)</option>
+                        <option value="ratnapura">Ratnapura (රත්නපුර)</option>
+                        <option value="kandy">Kandy (මහනුවර)</option>
+                    </select>
+                </div>
+                <br>
+                
+                <div class="dropdown-group">
+                    <label for="ds_division"><font size="2" color="black">Select Divisional Secretariat Area : </font></label>
+                    <select id="ds_division" name="ds_division">
+                        <option value="">-- Select District First --</option>
+                    </select>
+                </div>
+                <br><br>
+                
+                <h3><hr color="green">    
+                    <font color="green" size="4">
+                        <b>
+                            INVENTORY OPERTIONS AND INVENTORY INFORMATION
+                        </b>
+                    </font>
+                </h3><hr color="green">
+                <br><br>
+                <label for="nic"><font size="2" color="black">Registration Number Of Fetilizer Store : </font></label>
+                <input type="text" id="nic" name="nic">
+                <br><br>
+                <label for="nic"><font size="2" color="black">Address Of Fertilizer Store : </font></label>
+                <br><br>
+                <textarea id="address" name="address" rows="5" cols="40"></textarea>
+                <br><br>
+                <label for="nic"><font size="2" color="black">Main types of fertilizers controlled : </font></label>
+                <br><br>
+                <textarea id="address" name="address" rows="5" cols="40"></textarea>
+                <br><br>
+                <label for="nic"><font size="2" color="black">Maximum capacity of the warehouse - metric tons : </font></label>
+                <input type="text" id="nic" name="nic">
+                <hr color="green">
+                 <h3>
+                     <font color="green" size="4">
+                         <b>
+                             Veryfication Checkbox
+                         </b>
+
+                    </font>
+                </h3>
+                <hr color="green">
+                <h3><font color="black">Are you a government official officially authorized to be in charge of the <br> relevant government fertilizer warehouse? : </font></h3>
+
+                    <input type="radio" id="yes" name="Authorized" value="yes">
+                    <label for="yes"><font size="2" color="black">Yes</font></label>
+                     <br>
+
+                     <input type="radio" id="NO" name="Authorized" value="NO">
+                     <label for="No"><font size="2" color="black">No</font></label>
+
+                    <br>
+                    <h3><font color="black">Do you agree to the terms of service and privacy statement? : </font></h3>
+
+                    <input type="radio" id="yes" name="Authorized" value="yes">
+                    <label for="yes"><font size="2" color="black">Yes</font></label>
+                     <br>
+
+                     <input type="radio" id="NO" name="Authorized" value="NO">
+                     <label for="No"><font size="2" color="black">No</font></label>
+
+                    
+                    
+                    <br>
+                    <hr color="green">
+                    <input type="submit" value="Submit" style="background-color: greenyellow; color:white">
+                    <input type="submit" value="Reset form" style="background-color: red; color:white">
+                    <hr color="green">
+
+                
+
+                
+
+                </form>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <script>
+    const data = {
+        galle: ["Galle Four Gravets", "Habaraduwa", "Ambalangoda", "Elpitiya", "Karandeniya", "Baddegama"],
+        matara: ["Matara Four Gravets", "Devinuwara", "Dickwella", "Akuressa", "Weligama", "Hakmana"],
+        ratnapura: ["Ratnapura", "Balangoda", "Eheliyagoda", "Kuruwita", "Pelmadulla", "Embilipitiya"],
+        kandy: ["Kandy Four Gravets", "Kundasale", "Harispattuwa", "Gampola", "Ududumbara"]
+    };
+
+    function changeDivisions() {
+        const districtSelect = document.getElementById("district");
+        const divisionSelect = document.getElementById("ds_division");
+        const selectedDistrict = districtSelect.value;
+
+
+        divisionSelect.innerHTML = '<option value="">-- Select Division --</option>';
+
+        if (selectedDistrict && data[selectedDistrict]) {
+            // තෝරාගත් දිස්ත්‍රික්කයට අදාළ ලැයිස්තුව ඇතුළත් කිරීම
+            data[selectedDistrict].forEach(item => {
+                let opt = document.createElement("option");
+                opt.value = item.toLowerCase().replace(/ /g, "_"); // value එක code එකක් ලෙස සකසයි (உදා: galle_four_gravets)
+                opt.text = item;
+                divisionSelect.appendChild(opt);
+            });
+        }
+    }
+    </script>
+    
+   <img src="logo.png.png" alt="logo photo" class="bottom-right-logo"> 
+</body>
+</html>

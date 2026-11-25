@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>තේ පොහොර බෙදා දීමේ පද්ධතිය</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo-box">
+            <img src="logo.png.png" alt="Logo" class="header-logo">
+        </div>
+        <div class="title-box">
+            <h1>TEA FERTILIZER DISTRIBUTION SYSTEM</h1>
+            <p>Please Make Sure Your Information Is Correct!</p>
+        </div>
+        <div class="user-photo-box">
+            <div class="photo-circle">
+                <img src="user-photo.jpg" alt="User Photo" id="userphoto">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-body">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <button class="nav-btn active">Current Stutus</button>
+            <button class="nav-btn">factory lists</button>
+            <button class="nav-btn">fertilizer inquires</button>
+            <button class="nav-btn">Allocated Fetilizer Inquires</button>
+        </aside>
+
+        <!-- Right Content Area -->
+        <main class="content-area">
+            <section class="info-card">
+                
+                <!-- Current Overview Section -->
+                <h2>Current Overview</h2>
+                <div class="overview-container">
+                    <div class="overview-box">
+                        <h3>TOTAL STOCK</h3>
+                        <p class="stock-qty">(5,200 Kg)</p>
+                        <button class="action-btn">View Details</button>
+                    </div>
+                    <div class="overview-box">
+                        <h3>PENDING REQUESTS</h3>
+                        <p class="stock-qty">(25 - KCC)</p>
+                        <button class="action-btn">View All Requests</button>
+                    </div>
+                </div>
+
+                <!-- Critical Alerts Section -->
+                <h2 style="margin-top: 30px;">Critical Alerts</h2>
+                <div class="alerts-container">
+                    <div class="alert-item warning">
+                        <span class="alert-icon">!</span>
+                        <p><strong>Low Stock:</strong> T-34 (Sack size: 25kg) - 10 left</p>
+                    </div>
+                    <div class="alert-item info">
+                        <span class="alert-icon">!</span>
+                        <p><strong>Incoming Stock:</strong> Batch #501 arriving tomorrow</p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
