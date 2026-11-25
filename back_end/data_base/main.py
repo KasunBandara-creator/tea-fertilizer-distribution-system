@@ -1,18 +1,30 @@
-# main.py
+# back_end/data_base/main.py
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from crud import (
-    create_tables,
-    add_user,
-    add_fertilizer,
-    get_fertilizers,
-    create_fertilizer_request,
-    get_all_requests,
-    update_request_status,
-    update_fertilizer_stock,
-)
+try:
+    from back_end.data_base.crud import (
+        create_tables,
+        add_user,
+        add_fertilizer,
+        get_fertilizers,
+        create_fertilizer_request,
+        get_all_requests,
+        update_request_status,
+        update_fertilizer_stock,
+    )
+except ModuleNotFoundError:
+    from crud import (
+        create_tables,
+        add_user,
+        add_fertilizer,
+        get_fertilizers,
+        create_fertilizer_request,
+        get_all_requests,
+        update_request_status,
+        update_fertilizer_stock,
+    )
 
 app = FastAPI(title="Tea Fertilizer Distribution System API")
 
@@ -24,10 +36,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-create_tables()
+
+@app.on_event("startup")
+def on_startup():
+    try:
+        create_tables()
+    except Exception as e:
+        print(f"Startup table creation warning: {e}")
 
 
-# Request Body Models (Pydantic)
 class UserCreate(BaseModel):
     full_name: str
     email: str

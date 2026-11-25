@@ -1,6 +1,11 @@
-# crud.py
-from database import create_connection
+# back_end/data_base/crud.py
+try:
+    from back_end.data_base.database import create_connection
+except ModuleNotFoundError:
+    from database import create_connection
+
 from mysql.connector import Error
+
 
 def create_tables():
     """පද්ධතියට අවශ්‍ය වගු (Tables) නිර්මාණය කිරීම"""
@@ -56,6 +61,7 @@ def create_tables():
             cursor.close()
             connection.close()
 
+
 def add_user(full_name, email, phone_number, address, role, password):
     """නව පරිශීලකයෙකු users වගුවට ඇතුළත් කිරීම"""
     connection = create_connection()
@@ -75,6 +81,7 @@ def add_user(full_name, email, phone_number, address, role, password):
     finally:
         cursor.close()
         connection.close()
+
 
 def add_fertilizer(fertilizer_name, description, quantity_kg, price_per_kg):
     """නව පොහොර වර්ගයක් fertilizers වගුවට ඇතුළත් කිරීම"""
@@ -96,6 +103,7 @@ def add_fertilizer(fertilizer_name, description, quantity_kg, price_per_kg):
         cursor.close()
         connection.close()
 
+
 def get_fertilizers():
     """සියලුම පොහොර වර්ග සහ තොග ලබා ගැනීම"""
     connection = create_connection()
@@ -111,6 +119,7 @@ def get_fertilizers():
             cursor.close()
             connection.close()
     return []
+
 
 def create_fertilizer_request(farmer_id, fertilizer_id, requested_qty_kg):
     """ගොවියෙකුගේ පොහොර ඉල්ලීමක් ඇතුළත් කිරීම (validation සමඟ)"""
@@ -131,6 +140,7 @@ def create_fertilizer_request(farmer_id, fertilizer_id, requested_qty_kg):
     finally:
         cursor.close()
         connection.close()
+
 
 def get_all_requests():
     """සියලුම පොහොර ඉල්ලීම් ලබා ගැනීම"""
@@ -163,6 +173,7 @@ def get_all_requests():
             connection.close()
     return []
 
+
 def update_request_status(request_id, new_status):
     """ඉල්ලීමක status එක යාවත්කාලීන කිරීම සහ Approve කළ විට තොගය අඩු කිරීම"""
     connection = create_connection()
@@ -186,7 +197,7 @@ def update_request_status(request_id, new_status):
             fert = cursor.fetchone()
             if not fert:
                 return False, "Fertilizer not found."
-            
+
             current_stock = float(fert['quantity_kg'])
             if current_stock < requested_qty:
                 return False, f"Insufficient stock! Available: {current_stock} kg, Requested: {requested_qty} kg."
@@ -211,6 +222,7 @@ def update_request_status(request_id, new_status):
         cursor.close()
         connection.close()
 
+
 def update_fertilizer_stock(fertilizer_id, quantity_change_kg):
     """පොහොර තොගය අතින් වැඩි කිරීමට (+) හෝ අඩු කිරීමට (-)"""
     connection = create_connection()
@@ -234,6 +246,7 @@ def update_fertilizer_stock(fertilizer_id, quantity_change_kg):
     finally:
         cursor.close()
         connection.close()
+
 
 if __name__ == "__main__":
     create_tables()
